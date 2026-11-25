@@ -41,9 +41,9 @@ def create_transaction(user:user_dependency,db:db_dependency,transaction:CreateT
     )
     db.add(new_transaction)
     db.commit()
-    return JSONResponse(status_code=201,content='Transaction created successfully.')
+    return JSONResponse(status_code=201,content={'message':'Transaction created successfully.'})
 
-@router.post('/transactions/update/{transaction_id}')
+@router.put('/transactions/update/{transaction_id}')
 def update_transaction(user:user_dependency,db:db_dependency,transaction_id:int,transaction:UpdateTransaction):
     if user is None:
         raise HTTPException(status_code=401,detail='Failed Authentication.')
@@ -56,7 +56,7 @@ def update_transaction(user:user_dependency,db:db_dependency,transaction_id:int,
     for key,value in update_data.items():
         setattr(update_transaction,key,value)
     db.commit()
-    return JSONResponse(status_code=200,content={'message':'Todo updated successfully.'})
+    return JSONResponse(status_code=200,content={'message':'Transaction updated successfully.'})
 
 @router.delete('/transactions/delete/{transaction_id}')
 def delete_transaction(user:user_dependency,db:db_dependency,transaction_id:int):
