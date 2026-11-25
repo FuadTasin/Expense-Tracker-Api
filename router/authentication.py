@@ -23,7 +23,7 @@ def authentiate_user(username,password,db):
         return False
 
 
-@router.post('/auth/registration')
+@router.post('/auth/register')
 def user_registration(db:db_dependency,user:UserRegistration):
     check_user=db.query(Users).filter(Users.username==user.username).first()
     if check_user is not None:
@@ -43,7 +43,7 @@ def user_registration(db:db_dependency,user:UserRegistration):
 def user_login(db:db_dependency,form_user:Annotated[OAuth2PasswordRequestForm,Depends()]):
     user=authentiate_user(form_user.username,form_user.password,db)
     if not user:
-        raise HTTPException(source_code=404,detail='Failed Login.')
+        raise HTTPException(status_code=404,detail='Failed Login.')
     token=create_access_token(user.username,user.id,timedelta(minutes=30))
     return {
         'access_token':token,

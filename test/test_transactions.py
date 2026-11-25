@@ -1,4 +1,4 @@
-from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from starlette.status import HTTP_200_OK, HTTP_201_CREATED
 from database import SessionLocal
 from models import Todos
 from test.test_main import client
@@ -29,8 +29,6 @@ def test_transaction():
     db.commit()
 
 
-
-
 app.dependency_overrides[get_current_user]=override_get_current_user
 
 
@@ -53,7 +51,7 @@ def test_create_transaction():
         "id": 1,
         "title": "shopping",
         "amount": 100,
-        "type": "expenses",
+        "type": "expense",
         "category": "Food"
     }
     response=client.post('/transactions/create',json=request_data)

@@ -72,7 +72,7 @@ def delete_transaction(user:user_dependency,db:db_dependency,transaction_id:int)
 def filter_transactions(user:user_dependency,db:db_dependency,type:str=Query(...,description='Filter based on expenses'),category:str=Query(...,description='Filter based on Food'),min_amount:float=Query(default=None),max_amount:float=Query(default=None)):
     if user is None:
         raise HTTPException(status_code=401,detail='Failed Authentication.')
-    type_field=["expenses"]
+    type_field=["expense","income"]
     category_field=["Food"]
     if type not in type_field or category not in category_field:
         raise HTTPException(status_code=404,detail="Invalid type/category")
